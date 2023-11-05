@@ -26,10 +26,14 @@
                             <li class="scroll-to-section"><a asp-controller="Home" asp-action="Index" class="active">Головна</a></li>
                             <li class="scroll-to-section"><a asp-controller="Home" asp-action="Index">Про нас</a></li>
                             <li class="scroll-to-section"><a asp-controller="Home" asp-action="Classes">Заняття</a></li>
-                            <li class="scroll-to-section"><a asp-controller="Home" asp-action="Tickets">Абонементи</a></li>
+                            <li class="scroll-to-section"><a asp-controller="Crud" asp-action="Tickets">Абонементи</a></li>
                             <li class="scroll-to-section"><a asp-controller="Home" asp-action="Schedule">Графік</a></li>
                             <li class="scroll-to-section"><a asp-controller="Home" asp-action="Contacts">Контакти</a></li>
-                            <li class="main-button"><a href="#">Sign Up</a></li>
+                            <li class="main-button"><a href="/UserAuthentication/Login">Sign Up</a></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li><a href="/UserAuthentication/Logout">Logout</a></li>
+                            }
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -132,24 +136,9 @@
     <script src="~/js/imgfix.min.js"></script>
     <script src="~/js/mixitup.js"></script>
     <script src="~/js/accordions.js"></script>
+    <script src="~/js/site.js"></script>
 
     <!-- Global Init -->
     <script src="~/js/custom.js"></script>
 </body>
 </html>
-
-<script>
-    function showTab(tabId) {
-        // Hide all articles in tabs-content
-        var articles = document.querySelectorAll('.tabs-content article');
-        articles.forEach(function (article) {
-            article.style.display = 'none';
-        });
-
-        // Show the selected tab
-        var selectedTab = document.getElementById(tabId);
-        if (selectedTab) {
-            selectedTab.style.display = 'block';
-        }
-    }
-</script>

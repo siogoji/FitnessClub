@@ -67,7 +67,7 @@ a {
 }
 
 h6 {
-    font-size: 65px;
+    font-size: 50px;
 }
 
 h2 {
@@ -154,6 +154,8 @@ body {
     .section-heading img {
         margin: 20px auto;
     }
+
+
 
 .dark-bg h2 {
     color: #fff;
@@ -999,6 +1001,37 @@ trainers
                 color: #99775C;
             }
 
+.section {
+    position: relative;
+}
+
+.arrow {
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 55%;
+    transform: translateY(-50%);
+}
+
+.arrow-left,
+.arrow-right {
+    display: block;
+    margin: 30px auto;
+    width: 25px;
+    height: 25px;
+    border-top: 2px solid #000;
+    border-left: 2px solid #000;
+}
+
+.arrow-left {
+    left: 20px;
+    transform: rotate(-45deg);
+}
+
+.arrow-right {
+    right: 10px;
+    transform: rotate(135deg);
+}
 
 /* 
 ---------------------------------------------
@@ -1085,6 +1118,46 @@ contact
         background-color: #f9735b;
     }
 
+.reg-form, .login-form {
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin: auto;
+    margin-top: 15px;
+    padding: 20px;
+}
+
+    .reg-form input[type=text], .reg-form input[type=password],
+    .login-form input[type=text], .login-form input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .reg-form button, .login-form button {
+        background-color: #aa048b;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .reg-form .container, .login-form .container {
+        padding: 16px;
+    }
+
+    .reg-form .msg, .login-form .msg {
+        padding: 0px;
+    }
+
+    .reg-form .err, .login-form .err {
+        color: red;
+    }
+
 
 /* 
 ---------------------------------------------
@@ -1116,7 +1189,6 @@ footer p {
         footer p a:hover {
             color: #99775C;
         }
-
 
 
 /* 
@@ -1229,8 +1301,12 @@ responsive
 
 @media (max-width: 992px) {
 
+    .main-banner .caption h6 {
+        font-size: 35px;
+    }
+
     .main-banner .caption h2 {
-        font-size: 64px;
+        font-size: 30px;
     }
 
     #features {
