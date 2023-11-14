@@ -28,6 +28,10 @@ namespace FitnessClub.Controllers
             return View();
         }
 
+        public IActionResult Trainers()
+        {
+            return View();
+        }
         public IActionResult Tickets()
         {
             return View();

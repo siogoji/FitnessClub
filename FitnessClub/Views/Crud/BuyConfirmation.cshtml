@@ -1,0 +1,26 @@
+﻿@model FitnessClub.Models.Ticket
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div class="container">
+        <h2>Підтвердження купівлі</h2>
+        <dl class="row">
+            <dt class="col-sm-3">Тип</dt>
+            <dd class="col-sm-9">@Model.Type</dd>
+
+            <dt class="col-sm-3">Період</dt>
+            <dd class="col-sm-9">@Model.Period</dd>
+
+            <dt class="col-sm-3">Ціна</dt>
+            <dd class="col-sm-9">@Model.Price</dd>
+        </dl>
+        <form asp-action="UserTickets" asp-controller="Crud" method="post">
+            <input type="hidden" name="id" value="@Model.TicketId" />
+            <button type="submit" class="btn btn-primary">Купити</button>
+        </form>
+    </div>
+</body>
+</html>

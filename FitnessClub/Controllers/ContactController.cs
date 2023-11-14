@@ -40,7 +40,5 @@ namespace FitnessClub.Controllers
 
             return RedirectToAction("Contacts", "Home");
         }
-
-
     }
 }

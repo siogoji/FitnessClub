@@ -12,5 +12,7 @@ namespace FitnessClub.Models
         public DbSet<FeedbackForm> FeedbackForm { get; set; }
 
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<UserTicket> UserTickets { get; set; }
     }
 }
