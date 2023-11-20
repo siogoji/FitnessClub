@@ -34,7 +34,7 @@
                                 {
                                     userName = userName.Substring(0, 5) + "...";
                                 }
-                                <li class="scroll-to-section user-info"><a href="#top">Welcome, @userName</a></li>
+                                <li class="scroll-to-section user-info"><a asp-controller="Crud" asp-action="UserTickets">Welcome, @userName</a></li>
                                 <li class="main-button"><a href="/UserAuthentication/Logout">Logout</a></li>
                             }
                             else
