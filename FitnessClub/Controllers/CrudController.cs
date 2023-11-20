@@ -32,10 +32,22 @@ namespace FitnessClub.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("TicketId,Type,Period,Price")] Ticket Ticket)
+        public IActionResult Create([Bind("TicketId,Type,Period,Price,Description")] Ticket Ticket, IFormFile photo)
         {
             if (ModelState.IsValid)
             {
+                byte[] photoBytes = null;
+                if (photo != null)
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        photo.CopyTo(ms);
+                        photoBytes = ms.ToArray();
+                    }
+                }
+
+                Ticket.Photo = photoBytes;
+
                 _context.Add(Ticket);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Tickets));
@@ -62,20 +74,42 @@ namespace FitnessClub.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("TicketId,Type,Period,Price")] Ticket Ticket)
+        public IActionResult Edit(int id, [Bind("TicketId,Type,Period,Price,Description")] Ticket ticket, IFormFile Photo)
         {
-            if (id != Ticket.TicketId)
+            if (id != ticket.TicketId)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                _context.Update(Ticket);
+                var existingTicket = _context.Tickets.FirstOrDefault(t => t.TicketId == id);
+
+                if (existingTicket == null)
+                {
+                    return NotFound();
+                }
+
+                existingTicket.Type = ticket.Type;
+                existingTicket.Period = ticket.Period;
+                existingTicket.Price = ticket.Price;
+                existingTicket.Description = ticket.Description;
+
+                if (Photo != null && Photo.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        Photo.CopyTo(ms);
+                        existingTicket.Photo = ms.ToArray();
+                    }
+                }
+
                 _context.SaveChanges();
+
                 return RedirectToAction(nameof(Tickets));
             }
-            return View(Ticket);
+
+            return View(ticket);
         }
 
         [HttpGet]
@@ -124,18 +158,13 @@ namespace FitnessClub.Controllers
             {
                 return NotFound();
             }
-
-            // Link the ticket to the current user
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = _context.Users.Find(userId);
 
             if (user != null)
             {
-                // Створення об'єкта UserTicket та додавання його до контексту
                 var userTicket = new UserTicket { UserId = userId, TicketId = ticket.TicketId };
                 _context.UserTickets.Add(userTicket);
-
-                // Save changes to the database
                 _context.SaveChanges();
             }
 
@@ -162,13 +191,10 @@ namespace FitnessClub.Controllers
         public IActionResult UserTickets()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            // Використовуйте LINQ для отримання квитків, пов'язаних з поточним користувачем
             var userTickets = _context.UserTickets
                 .Where(ut => ut.UserId == userId)
                 .Select(ut => ut.Ticket)
                 .ToList();
-
             return View(userTickets);
         }
     }

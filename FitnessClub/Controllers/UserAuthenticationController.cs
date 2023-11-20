@@ -36,6 +36,7 @@ namespace FitnessClub.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -45,6 +46,7 @@ namespace FitnessClub.Controllers
             TempData["msg"] = result.Message;
             return RedirectToAction(nameof(Register));
         }
+
         [Authorize]
         public async Task<IActionResult> Logout()
         {
