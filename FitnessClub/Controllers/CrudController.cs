@@ -1,6 +1,5 @@
 ﻿using FitnessClub.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Sockets;
 using System.Security.Claims;
 
 namespace FitnessClub.Controllers
@@ -159,17 +158,13 @@ namespace FitnessClub.Controllers
                 return NotFound();
             }
 
-            // Link the ticket to the current user
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = _context.Users.Find(userId);
 
             if (user != null)
             {
-                // Створення об'єкта UserTicket та додавання його до контексту
                 var userTicket = new UserTicket { UserId = userId, TicketId = ticket.TicketId };
                 _context.UserTickets.Add(userTicket);
-
-                // Save changes to the database
                 _context.SaveChanges();
             }
 
@@ -197,7 +192,6 @@ namespace FitnessClub.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            // Використовуйте LINQ для отримання квитків, пов'язаних з поточним користувачем
             var userTickets = _context.UserTickets
                 .Where(ut => ut.UserId == userId)
                 .Select(ut => ut.Ticket)
