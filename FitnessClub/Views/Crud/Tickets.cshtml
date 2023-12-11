@@ -15,6 +15,16 @@
                 </div>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <form onsubmit="return searchOnPage()">
+                    <div class="form-group">
+                        <input type="text" id="searchTerm" class="form-control" placeholder=@Localizer["Пошук..."]>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">@Localizer["Пошук"]</button>
+                </form>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 @if (User.IsInRole("admin"))
@@ -26,7 +36,7 @@
                 <div class="mt-3">
                     @foreach (var ticket in Model)
                     {
-                        <div class="col-12">
+                        <div class="col-12 searchable">
                             <div class="card mb-3">
                                 <div class="row no-gutters">
                                     <div class="col-md-2 poster">
@@ -67,8 +77,25 @@
 </section>
 
 <script>
-    function confirmDelete(trainerId) {
-        window.location.href = "/Crud/Delete/" + trainerId;
+    function confirmDelete(ticketId) {
+        window.location.href = "/Crud/Delete/" + ticketId;
     }
 </script>
 
+<script>
+    function searchOnPage() {
+        var searchTerm = document.getElementById("searchTerm").value.toLowerCase();
+        var elements = document.querySelectorAll('.searchable');
+
+        for (var i = 0; i < elements.length; i++) {
+            var content = elements[i].textContent.toLowerCase();
+            if (content.includes(searchTerm)) {
+                elements[i].style.display = "block";
+            } else {
+                elements[i].style.display = "none";
+            }
+        }
+
+        return false;
+    }
+</script>
